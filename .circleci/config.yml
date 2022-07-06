@@ -159,27 +159,24 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment    
 
-  # configure-infrastructure:
-  #   docker:
-  #     - image: python:3.7-alpine3.16
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/
-  #     - add_ssh_keys:
-  #           fingerprints: ["ca:0e:3c:d2:b0:fe:9f:c9:28:50:75:17:20:b3:3f:a3"]
-  #     - run:
-  #         name: Install Ansible and aws-cli
-  #         command: |
-  #           apk add --no-cache aws-cli 
-  #           apk add --update ansible
-  #     - run:
-  #         name: Configure server
-  #         command: |
-  #           # Your code here
-  #           exit 1
-      # Here's where you will add some code to rollback on failure      
-
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.16
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+            fingerprints: ["ca:0e:3c:d2:b0:fe:9f:c9:28:50:75:17:20:b3:3f:a3"]
+      - run:
+          name: Install Ansible and aws-cli
+          command: |
+            apk add --no-cache aws-cli 
+            apk add --update ansible
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt main.yml -vvv
   # run-migrations:
   #   docker:
   #     # Docker image here that supports NodeJS
