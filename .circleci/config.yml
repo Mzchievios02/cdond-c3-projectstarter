@@ -161,22 +161,24 @@ jobs:
 
   # configure-infrastructure:
   #   docker:
-  #     # Docker image here that supports Ansible
+  #     - image: python:3.7-alpine3.16
   #   steps:
-  #     # Checkout code from git
-  #     # Add ssh keys with fingerprint
-  #     # attach workspace
+  #     - checkout
+  #     - attach_workspace:
+  #         at: ~/
+  #     - add_ssh_keys:
+  #           fingerprints: ["ca:0e:3c:d2:b0:fe:9f:c9:28:50:75:17:20:b3:3f:a3"]
   #     - run:
-  #         name: Install dependencies
+  #         name: Install Ansible and aws-cli
   #         command: |
-  #           # Your code here
-  #           exit 1
+  #           apk add --no-cache aws-cli 
+  #           apk add --update ansible
   #     - run:
   #         name: Configure server
   #         command: |
   #           # Your code here
   #           exit 1
-  #     # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure      
 
   # run-migrations:
   #   docker:
@@ -305,9 +307,9 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          # filters:
-          #   branches:
-          #     only: [test-feature-branch]
+          filters:
+            branches:
+              only: [test-feature-branch]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
