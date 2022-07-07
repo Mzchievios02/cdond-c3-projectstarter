@@ -193,6 +193,11 @@ jobs:
             cd backend
             npm install
       - run:
+          name: Update packages
+          command: |
+            cd backend
+            ncu
+      - run:
           name: Fix vulnerabilities
           command: |
             cd backend
