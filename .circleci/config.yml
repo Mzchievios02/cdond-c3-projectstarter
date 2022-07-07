@@ -188,12 +188,25 @@ jobs:
       - restore_cache:
           keys: "backend-build"
       - run:
-          name: Run migrations
+          name: Install npm
           command: |
             cd backend
             npm install
-            npm install -g aws-cli
-            npm audit fix --force
+      - run:
+          name: Fix vulnerabilities
+          command: |
+            cd backend
+            # npm audit fix --force
+            npm audit fix --audit-level=critical --force
+            npm audit --audit-level=critical
+      - run: 
+        name: Install aws cli
+        command: |
+          npm install -g aws-cli
+      - run:
+          name: Run migrations
+          command: |
+            cd backend
             npm run migrations > ~/project/backend/migrations_dump.txt
             cat ~/project/backend/migrations_dump.txt
       - run:
