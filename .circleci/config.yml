@@ -182,21 +182,23 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      # - image: circleci/node:13.8.0
+      - image: circleci/node:18.4.0      
     steps:
       - checkout
       - restore_cache:
           keys: "backend-build"
       - run:
-          name: Install npm
+          name: Install npm 
           command: |
             cd backend
-            npm install
+            npm install -g npm-check-updates
       - run:
           name: Update packages
           command: |
             cd backend
             ncu
+            nuc -u
       - run:
           name: Fix vulnerabilities
           command: |
