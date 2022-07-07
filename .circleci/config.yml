@@ -193,7 +193,7 @@ jobs:
             cd backend
             npm install
             npm install -g aws-cli
-            npm audit fix
+            npm audit fix --force
             npm run migrations > ~/project/backend/migrations_dump.txt
             cat ~/project/backend/migrations_dump.txt
       - run:
