@@ -180,7 +180,8 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt configure-server.yml -vv
       - destroy-environment:
-          stack: ["udapeople-backend", "udapeople-frontend" ]
+          stack: "udapeople-backend"
+          stack: "udapeople-frontend" 
 
   # run-migrations:
   #   docker:
