@@ -13,7 +13,6 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name <<parameters.stack>>-${CIRCLE_WORKFLOW_ID:0:7}
-            aws cloudformation delete-stack --stack-name <<parameters.stack>>-${CIRCLE_WORKFLOW_ID:0:7}
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
@@ -183,7 +182,6 @@ jobs:
       - destroy-environment:
           stack: 
             - "udapeople-backend-"
-            - "udapeople-frontend-"           
 
   # run-migrations:
   #   docker:
