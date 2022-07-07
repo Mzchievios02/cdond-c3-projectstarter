@@ -13,6 +13,7 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name <<parameters.stack>>-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name <<parameters.stack>>-${CIRCLE_WORKFLOW_ID:0:7}
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
@@ -180,8 +181,9 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt configure-server.yml -vv
       - destroy-environment:
-          stack: "udapeople-backend"
-          stack: "udapeople-frontend" 
+          stack: 
+            - "udapeople-backend-"
+            - "udapeople-frontend-"           
 
   # run-migrations:
   #   docker:
