@@ -192,28 +192,18 @@ jobs:
           name: Install npm 
           command: |
             cd backend
-            npm install  # -g npm-check-updates
-      # - run:
-      #     name: Update packages
-      #     command: |
-      #       cd backend
-      #       ncu
-      #       nuc -u
-      # - run:
-      #     name: Fix vulnerabilities
-      #     command: |
-      #       cd backend
-      #       # npm audit fix --force
-      #       npm audit fix --audit-level=critical --force
-      #       npm audit --audit-level=critical
-      # - run: 
-      #     name: Install aws cli
-      #     command: |
-      #       npm install -g aws-cli
+            npm install
+      - run: 
+          name: Install aws cli
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            aws --version
       - run:
           name: Run migrations
           command: |
-            cd backend
+            cd backend # Remove
             npm run migrations > ~/project/backend/migrations_dump.txt
             cat ~/project/backend/migrations_dump.txt
       - run:
@@ -223,35 +213,35 @@ jobs:
             then
             curl https://kvdb.io/DGWddfAddZ4dVHKsga131p/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
             fi
-      # - destroy-environment      
+      - destroy-environment      
 
-  # deploy-frontend:
-  #   docker:
-  #     - image: amazon/aws-cli
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           npm install
-  #     - run:
-  #         name: Get backend url
-  #         command: |
-  #           tail -n 1 ~/project/.circleci/ansible/inventory.txt > backendIP.txt
-  #           BACKEND_IP=$(<backendIP.txt)
-  #           export API_URL="http://${BACKEND_IP}:3030"
-  #           echo "${API_URL}"
-  #     - run:
-  #         name: Deploy frontend objects
-  #         command: |
-  #           cd frontend
-  #           npm install
-  #           npm run build
-  #           tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-  #           aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-  #     # Here's where you will add some code to rollback on failure      
+  deploy-frontend:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - run:
+          name: Get backend url
+          command: |
+            tail -n 1 ~/project/.circleci/ansible/inventory.txt > backendIP.txt
+            BACKEND_IP=$(<backendIP.txt)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"
+      - run:
+          name: Deploy frontend objects
+          command: |
+            cd frontend
+            npm install
+            npm run build
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      # Here's where you will add some code to rollback on failure      
                     
   # deploy-backend:
   #   docker:
