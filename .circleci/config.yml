@@ -288,6 +288,11 @@ jobs:
       #       # Zip the directory
       #       tar -C backend -czvf artifact.tar.gz .
       - run:
+          name: Install Ansible and aws-cli
+          command: |
+            apk add --no-cache aws-cli 
+            apk add --update ansible
+      - run:
           name: Deploy backend
           command: |
             cd .circleci/ansible
