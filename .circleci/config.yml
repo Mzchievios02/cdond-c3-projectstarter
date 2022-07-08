@@ -206,16 +206,16 @@ jobs:
       #       # npm audit fix --force
       #       npm audit fix --audit-level=critical --force
       #       npm audit --audit-level=critical
-      - run: 
-          name: Install aws cli
-          command: |
-            npm install -g aws-cli
-      - run:
-          name: Run migrations
-          command: |
-            cd backend
-            npm run migrations > ~/project/backend/migrations_dump.txt
-            cat ~/project/backend/migrations_dump.txt
+      # - run: 
+      #     name: Install aws cli
+      #     command: |
+      #       npm install -g aws-cli
+      # - run:
+      #     name: Run migrations
+      #     command: |
+      #       cd backend
+      #       npm run migrations > ~/project/backend/migrations_dump.txt
+      #       cat ~/project/backend/migrations_dump.txt
       - run:
           name: Send migration results to memstash
           command: |
@@ -223,7 +223,7 @@ jobs:
             then
             curl https://kvdb.io/DGWddfAddZ4dVHKsga131p/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1
             fi
-      - destroy-environment      
+      # - destroy-environment      
 
   # deploy-frontend:
   #   docker:
