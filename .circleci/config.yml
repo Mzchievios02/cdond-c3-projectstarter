@@ -278,7 +278,7 @@ jobs:
             sudo apt-get install python3-pip git libffi-dev libssl-dev -y
             pip3 install ansible
       - run:
-          name: Deploy backend
+          name: Run build and archive backend
           command: |
             cd backend
             npm i
@@ -289,22 +289,25 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
-      - run: 
-          name: What's in artifact.tar.gz
+      - run:
+          name: Deploy backend
           command: |
-            tar tf artifact.tar.gz
+            ansible-playbook -i inventory.txt deploy-backend.yml            
+      # - run: 
+      #     name: What's in artifact.tar.gz
+      #     command: |
+      #       tar tf artifact.tar.gz
       - destroy-environment
 
   # smoke-test:
   #   docker:
-  #     # Lightweight Docker image 
+  #     - image: alpine:latest
   #   steps:
-  #     # Checkout code from git
+  #     - checkout
   #     - run:
   #         name: Install dependencies
   #         command: |
-  #           # your code here
+  #           apk add --update curl
   #     - run:
   #         name: Get backend url
   #         command: |
