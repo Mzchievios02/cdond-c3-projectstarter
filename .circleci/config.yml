@@ -210,12 +210,12 @@ jobs:
       #     name: Install aws cli
       #     command: |
       #       npm install -g aws-cli
-      # - run:
-      #     name: Run migrations
-      #     command: |
-      #       cd backend
-      #       npm run migrations > ~/project/backend/migrations_dump.txt
-      #       cat ~/project/backend/migrations_dump.txt
+      - run:
+          name: Run migrations
+          command: |
+            cd backend
+            npm run migrations > ~/project/backend/migrations_dump.txt
+            cat ~/project/backend/migrations_dump.txt
       - run:
           name: Send migration results to memstash
           command: |
