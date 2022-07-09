@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true, // Added to fix TypeError: supertest_1.default is not a function
     "module": "commonjs",
     "declaration": true,
     "noImplicitAny": false,
