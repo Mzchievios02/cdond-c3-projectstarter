@@ -1,0 +1,28 @@
+.
+├── ansible
+│   ├── configure-server.yml
+│   ├── deploy-backend.yml
+│   ├── inventory.txt
+│   └── roles
+│       ├── configure-prometheus-node-exporter
+│       │   ├── files
+│       │   │   └── node_exporter.service
+│       │   └── tasks
+│       │       └── main.yml
+│       ├── configure-server
+│       │   └── tasks
+│       │       ├── main.yml
+│       │       └── readme.md
+│       └── deploy
+│           └── tasks
+│               ├── main.yml
+│               └── readme.md
+├── config.yml
+├── files
+│   ├── backend.yml
+│   ├── cloudfront.yml
+│   ├── deploy.sh
+│   └── frontend.yml
+└── tree.txt
+
+10 directories, 15 files
