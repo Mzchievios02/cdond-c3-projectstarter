@@ -12,7 +12,7 @@
 - name: "Extract artifact to EC2"
   unarchive:
     src: ~/project/artifact.tar.gz
-    dest: ~/artifact
+    dest: /home/ubuntu
     
 - name: "Install Nodejs and npm"
   become: yes    
