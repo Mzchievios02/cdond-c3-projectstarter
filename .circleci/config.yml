@@ -314,6 +314,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
+            cat ~/project/.circleci/ansible/inventory.txt
             tail -n 1 ~/project/.circleci/ansible/inventory.txt > backendIP.txt
             BACKEND_IP=$(<backendIP.txt)
             export API_URL="http://${BACKEND_IP}:3030"
@@ -337,7 +338,7 @@ jobs:
               exit 0
             else
               exit 1
-      - destroy-environment  
+      # - destroy-environment  
 
 #   cloudfront-update:
 #     docker:
