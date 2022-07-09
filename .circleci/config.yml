@@ -94,6 +94,8 @@ jobs:
             cd frontend
             npm install
             npm run test
+            npm run test:e2e
+            npm run test:cov
             
   scan-frontend:
     docker:
