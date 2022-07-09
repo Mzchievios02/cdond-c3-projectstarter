@@ -293,10 +293,6 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat ~/project/.circleci/ansible/inventory.txt
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt deploy-backend.yml -vvv           
-      # - run: 
-      #     name: What's in artifact.tar.gz
-      #     command: |
-      #       tar tf artifact.tar.gz
       - destroy-environment
 
   smoke-test:
@@ -316,6 +312,7 @@ jobs:
           command: |
             cat ~/project/.circleci/ansible/inventory.txt
             tail -n 1 ~/project/.circleci/ansible/inventory.txt > backendIP.txt
+            cat backendIP.txt
             BACKEND_IP=$(<backendIP.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
